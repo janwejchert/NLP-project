@@ -1,0 +1,51 @@
+id,instruction,readback,expected_verdict,error_category,affected_field,expected_detail,design_note
+TC01,"Speedbird 245, climb flight level 280.","Climb flight level 280, Speedbird 245.",MATCH,correct,none,none,"single item, altitude"
+TC02,"Iberia 6020, turn right heading 120.","Right heading 120, Iberia 6020.",MATCH,correct,none,none,"single item, heading"
+TC03,"Ryanair 12 Quebec, contact Tower 118.7.","Tower 118.7, Ryanair 12 Quebec.",MATCH,correct,none,none,frequency handoff
+TC04,"Easy 4471, squawk 4271.","Squawk 4271, Easy 4471.",MATCH,correct,none,none,transponder code
+TC05,"Speedbird 245, descend flight level 240, turn left heading 270.","Descend flight level 240, left heading 270, Speedbird 245.",MATCH,correct,none,none,"multi-part, two items both correct"
+TC06,"Iberia 6020, climb flight level 320, increase speed 280 knots.","Climb flight level 320, speed 280 knots, Iberia 6020.",MATCH,correct,none,none,"multi-part, altitude and speed"
+TC07,"Vueling 38 Lima, cleared to land runway 24, wind 250 degrees 8 knots.","Cleared to land runway 24, Vueling 38 Lima.",MATCH,correct,none,none,"wind is informational, not a required readback item"
+TC08,"Air Europa 75, line up and wait runway 06.","Line up and wait runway 06, Air Europa 75.",MATCH,correct,none,none,ground clearance
+TC09,"G-ABCD, descend altitude 3000 feet, QNH 1013.","Descend altitude 3000 feet, QNH 1013, G-ABCD.",MATCH,correct,none,none,"altitude plus QNH, GA callsign"
+TC10,"G-CDEF, climb altitude three thousand feet, QNH one zero one three.","Climb three thousand feet, QNH 1013, G-CDEF.",MATCH,correct,none,none,"hard case: spelled-out numbers, content correct"
+TC11,"G-ABCD, after the landing Cessna, line up and wait runway 18.","Line up and wait runway 18 after the landing Cessna, G-ABCD.",MATCH,correct,none,none,hard case: conditional clearance with traffic
+TC12,"Easy 4471, reduce speed 210 knots, descend flight level 100.","Speed 210 knots, descend flight level 100, Easy 4471.",MATCH,correct,none,none,"multi-part, speed and altitude"
+TC13,"Speedbird 245, cleared ILS approach runway 24.","Cleared ILS approach runway 24, Speedbird 245.",MATCH,correct,none,none,approach clearance
+TC14,"Iberia 6020, hold short of runway 32 left.","Holding short runway 32 left, Iberia 6020.",MATCH,correct,none,none,"hard case: non-standard wording, content correct"
+TC15,"Speedbird 245, descend flight level 180, reduce speed 250 knots, contact Approach 121.35.","Descend flight level 180, speed 250 knots, Approach 121.35, Speedbird 245.",MATCH,correct,none,none,"three-item instruction, all correct"
+TC16,"Iberia 6020, maintain flight level 320.","Maintain flight level 320, Iberia 6020.",MATCH,correct,none,none,maintain instruction
+TC17,"Speedbird 245, descend flight level 240.","Descend flight level 250, Speedbird 245.",DISCREPANCY,value_substitution,altitude,"instructed FL240, read back FL250",single altitude error
+TC18,"G-ABCD, descend altitude 4000 feet.","Descend altitude 5000 feet, G-ABCD.",DISCREPANCY,value_substitution,altitude,"instructed 4000 ft, read back 5000 ft","single altitude error, feet"
+TC19,"Iberia 6020, turn left heading 270.","Left heading 250, Iberia 6020.",DISCREPANCY,value_substitution,heading,"instructed heading 270, read back 250",single heading error
+TC20,"Ryanair 12 Quebec, contact Tower 118.7.","Tower 118.9, Ryanair 12 Quebec.",DISCREPANCY,value_substitution,frequency,"instructed 118.7, read back 118.9",single frequency error
+TC21,"Easy 4471, squawk 4271.","Squawk 4371, Easy 4471.",DISCREPANCY,value_substitution,squawk,"instructed 4271, read back 4371",single squawk error
+TC22,"Vueling 38 Lima, cleared to land runway 24.","Cleared to land runway 23, Vueling 38 Lima.",DISCREPANCY,value_substitution,runway,"instructed runway 24, read back 23",single runway error
+TC23,"Air Europa 75, reduce speed 210 knots.","Speed 220 knots, Air Europa 75.",DISCREPANCY,value_substitution,speed,"instructed 210 kt, read back 220 kt",single speed error
+TC24,"G-CDEF, descend altitude 3000 feet, QNH 1013.","Descend altitude 3000 feet, QNH 1018, G-CDEF.",DISCREPANCY,value_substitution,qnh,"instructed QNH 1013, read back 1018","QNH error, altitude correct"
+TC25,"Speedbird 245, climb flight level 320.","Climb flight level 310, Speedbird 245.",DISCREPANCY,value_substitution,altitude,"instructed FL320, read back FL310",single altitude error
+TC26,"Iberia 6020, descend flight level 120, turn right heading 090.","Descend flight level 120, right heading 080, Iberia 6020.",DISCREPANCY,value_substitution,heading,"instructed heading 090, read back 080","heading error, altitude correct"
+TC27,"Speedbird 245, descend flight level 240, turn left heading 270.","Descend flight level 250, left heading 250, Speedbird 245.",DISCREPANCY,value_substitution,altitude; heading,FL240 read back FL250 and heading 270 read back 250,hard case: two simultaneous errors
+TC28,"Easy 4471, squawk 5701.","Squawk 5071, Easy 4471.",DISCREPANCY,digit_transposition,squawk,5701 read back as 5071,"transposition, squawk"
+TC29,"Speedbird 245, contact Approach 119.45.","Approach 119.54, Speedbird 245.",DISCREPANCY,digit_transposition,frequency,119.45 read back as 119.54,"transposition, frequency"
+TC30,"Iberia 6020, turn right heading 310.","Right heading 130, Iberia 6020.",DISCREPANCY,digit_transposition,heading,310 read back as 130,"transposition, heading"
+TC31,"Air Europa 75, climb flight level 230.","Climb flight level 320, Air Europa 75.",DISCREPANCY,digit_transposition,altitude,FL230 read back as FL320,"transposition, altitude"
+TC32,"G-ABCD, squawk 2456.","Squawk 2465, G-ABCD.",DISCREPANCY,digit_transposition,squawk,2456 read back as 2465,"transposition, adjacent digits"
+TC33,"Vueling 38 Lima, line up and wait runway 21.","Line up and wait runway 12, Vueling 38 Lima.",DISCREPANCY,digit_transposition,runway,runway 21 read back as 12,"hard case: runway reversal, high risk"
+TC34,"Easy 4471, contact Approach 121.35.","Approach 121.53, Easy 4471.",DISCREPANCY,digit_transposition,frequency,121.35 read back as 121.53,"transposition, frequency"
+TC35,"Speedbird 245, descend flight level 240, turn left heading 270.","Descend flight level 240, Speedbird 245.",DISCREPANCY,omission,heading,heading 270 not read back,omission from two-item instruction
+TC36,"Iberia 6020, turn right heading 120, contact Tower 118.7.","Right heading 120, Iberia 6020.",DISCREPANCY,omission,frequency,Tower frequency 118.7 not read back,frequency omitted
+TC37,"Easy 4471, descend altitude 4000 feet, squawk 4271.","Descend altitude 4000 feet, Easy 4471.",DISCREPANCY,omission,squawk,squawk 4271 not read back,squawk omitted
+TC38,"G-ABCD, descend altitude 3000 feet, QNH 998.","Descend altitude 3000 feet, G-ABCD.",DISCREPANCY,omission,qnh,QNH 998 not read back,QNH omitted
+TC39,"Vueling 38 Lima, cleared to land runway 24.","Cleared to land, Vueling 38 Lima.",DISCREPANCY,omission,runway,runway 24 not read back,runway omitted from landing clearance
+TC40,"Air Europa 75, reduce speed 210 knots, descend flight level 100.","Descend flight level 100, Air Europa 75.",DISCREPANCY,omission,speed,speed restriction 210 kt not read back,speed restriction omitted
+TC41,"Speedbird 245, turn left heading 270, descend flight level 200.","Wilco, Speedbird 245.",DISCREPANCY,omission,multiple,no mandatory items read back,hard case: acknowledgement only
+TC42,"Speedbird 245, climb flight level 320, squawk 3625, contact Centre 132.15.","Climb flight level 320, Centre 132.15, Speedbird 245.",DISCREPANCY,omission,squawk,squawk 3625 not read back,omission from three-item instruction
+TC43,"Speedbird 245, climb flight level 280.","Climb flight level 280, Speedbird 254.",DISCREPANCY,callsign_error,callsign,callsign read back as 254 instead of 245,callsign digit error
+TC44,"Iberia 6020, turn right heading 120.","Right heading 120, Iberia 6024.",DISCREPANCY,callsign_error,callsign,callsign 6020 read back as 6024,callsign digit error
+TC45,"G-ABCD, descend altitude 3000 feet.","Descend altitude 3000 feet, G-ABCE.",DISCREPANCY,callsign_error,callsign,callsign G-ABCD read back as G-ABCE,GA callsign error
+TC46,"Easy 4471, squawk 4271.",Squawk 4271.,DISCREPANCY,callsign_error,callsign,no callsign in readback,callsign missing
+TC47,"Ryanair 12 Quebec, contact Tower 118.7.","Tower 118.7, Ryanair 12 Golf.",DISCREPANCY,callsign_error,callsign,12 Quebec read back as 12 Golf,hard case: similar callsign confusion
+TC48,"Speedbird 245, descend flight level 240.","Descend flight level 240, left heading 270, Speedbird 245.",DISCREPANCY,added_element,heading,heading turn read back that was not instructed,added heading not instructed
+TC49,"Iberia 6020, turn right heading 120.","Right heading 120, descending flight level 100, Iberia 6020.",DISCREPANCY,added_element,altitude,descent read back that was not issued,added descent not instructed
+TC50,"Easy 4471, contact Tower 118.7.","Tower 118.7, squawk 7000, Easy 4471.",DISCREPANCY,added_element,squawk,squawk change read back that was not issued,added squawk not instructed
