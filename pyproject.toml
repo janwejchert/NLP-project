@@ -1,0 +1,38 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "atc-readback-verifier"
+version = "0.1.0"
+description = "Verify that a pilot's ATC readback matches the controller's instruction."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "streamlit>=1.40,<2",
+    "huggingface_hub>=0.27,<1",
+    "ollama>=0.4,<1",
+    "python-dotenv>=1.0,<2",
+    "pandas>=2.2,<3",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "W", "UP"]
+
+[tool.ruff.lint.per-file-ignores]
+# app/eval entrypoints add `src` to sys.path before importing the package.
+# The app also carries an embedded CSS stylesheet, so long lines are expected.
+"app/*" = ["E402", "E501"]
+"eval/*" = ["E402"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src", "eval"]
+testpaths = ["tests"]
+addopts = "-q"

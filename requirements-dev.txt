@@ -1,0 +1,10 @@
+# Development dependencies (tests + linting + analysis notebook). Install with:
+#   pip install -r requirements.txt -r requirements-dev.txt
+-r requirements.txt
+pytest>=8,<9
+ruff>=0.8
+# Analysis notebook (notebooks/analysis.ipynb, built by notebooks/build_notebook.py)
+matplotlib>=3.8
+jupyter>=1.0
+nbconvert>=7
+ipykernel>=6
