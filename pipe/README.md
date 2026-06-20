@@ -1,10 +1,5 @@
 # PIPE!
 
-A **code-review agent** built on the [Claude Agent SDK](https://code.claude.com/docs/en/agent-sdk/python).
-Point it at a file and it returns a structured review — correctness bugs, security
-issues, style notes, and concrete suggestions. It runs **read-only**: it can read
-and search your code but cannot edit, write, or run shell commands.
-
 ## Setup
 
 ```bash
