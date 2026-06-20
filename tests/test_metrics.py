@@ -1,8 +1,8 @@
 """Unit tests for the evaluation metrics (eval/metrics.py).
 
-These pin the headline safety arithmetic — false-alarm rate, precision/recall/F1,
+These pin the headline safety arithmetic: false-alarm rate, precision/recall/F1,
 the confusion matrix, per-category detection recall, and the zero-denominator
-guards — on small fixed record sets, independent of any model run.
+guards, on small fixed record sets, independent of any model run.
 """
 
 from __future__ import annotations

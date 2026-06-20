@@ -1,4 +1,4 @@
-# ATC Readback Verifier — common tasks.
+# ATC Readback Verifier: common tasks.
 # Usage: `make setup`, `make test`, `make run`, `make eval`, etc.
 
 VENV ?= .venv

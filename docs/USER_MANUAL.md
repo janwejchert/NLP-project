@@ -1,10 +1,10 @@
-# ATC Readback Verifier — User Manual
+# ATC Readback Verifier: User Manual
 
 > Course project (NLP Group Project, Option 1). This is a proof of concept, **not certified for operational use**.
 
 ## Who it is for
 
-This tool is for anyone who wants to check whether a pilot's **readback** correctly repeats a controller's **instruction**. In real air traffic control, an incorrect or incomplete readback — a wrong altitude, transposed digits, or an omitted item — is a documented contributor to aviation incidents (e.g. NASA's Aviation Safety Reporting System). The app extracts structured fields from each message, compares them field by field, and tells you whether the readback is a **MATCH** or contains a **DISCREPANCY**, with a specific list of problems.
+This tool is for anyone who wants to check whether a pilot's **readback** correctly repeats a controller's **instruction**. In real air traffic control, an incorrect or incomplete readback, a wrong altitude, transposed digits, or an omitted item, is a documented contributor to aviation incidents (e.g. NASA's Aviation Safety Reporting System). The app extracts structured fields from each message, compares them field by field, and tells you whether the readback is a **MATCH** or contains a **DISCREPANCY**, with a specific list of problems.
 
 ## Starting the app
 
@@ -26,24 +26,24 @@ Streamlit will open the app in your browser (typically at `http://localhost:8501
 
 The page has a main area with two text boxes and a **sidebar** with settings.
 
-- **Controller instruction** (top text box) — type or paste the controller's instruction, e.g. `Speedbird 245, climb flight level 280.`
-- **Pilot readback** (second text box) — type or paste the pilot's readback, e.g. `Climb flight level 280, Speedbird 245.`
+- **Controller instruction** (top text box): type or paste the controller's instruction, e.g. `Speedbird 245, climb flight level 280.`
+- **Pilot readback** (second text box): type or paste the pilot's readback, e.g. `Climb flight level 280, Speedbird 245.`
 - **Sidebar → Settings:**
-  - **Extraction backend** — selects which model extracts the fields: `ollama` (a local model) or `hf` (the Hugging Face Inference API). The default follows your configuration.
-  - **Model (optional override)** — leave blank to use the default model, or type a model name to override it (e.g. `qwen2.5:3b` or `Qwen/Qwen2.5-7B-Instruct`).
-  - **Load an example** — pick one of the built-in example pairs to auto-fill both text boxes so you can try the app immediately.
-- **Verify readback** (primary button) — runs the verification. If either box is empty you will be prompted to fill both in. While it works, a short "Extracting fields and comparing…" spinner is shown.
+  - **Extraction backend**: selects which model extracts the fields: `ollama` (a local model) or `hf` (the Hugging Face Inference API). The default follows your configuration.
+  - **Model (optional override)**: leave blank to use the default model, or type a model name to override it (e.g. `qwen2.5:3b` or `Qwen/Qwen2.5-7B-Instruct`).
+  - **Load an example**: pick one of the built-in example pairs to auto-fill both text boxes so you can try the app immediately.
+- **Verify readback** (primary button): runs the verification. If either box is empty you will be prompted to fill both in. While it works, a short "Extracting fields and comparing…" spinner is shown.
 
 ## How to read the result
 
 After you click **Verify readback**, one of two banners appears:
 
-- **Green banner — `✅ MATCH — the readback is correct.`** The readback contains every instructed item, with no errors.
-- **Red banner — `❌ DISCREPANCY — N issue(s) found.`** One or more problems were detected. Each problem is listed on its own line in the form:
+- **Green banner: `✅ MATCH: the readback is correct.`** The readback contains every instructed item, with no errors.
+- **Red banner: `❌ DISCREPANCY: N issue(s) found.`** One or more problems were detected. Each problem is listed on its own line in the form:
 
-  > **field** · _category_ — detail
+  > **field** · _category_ - detail
 
-  For example: **altitude** · _value substitution_ — instructed altitude FL240, read back as FL250.
+  For example: **altitude** · _value substitution_ - instructed altitude FL240, read back as FL250.
   The **field** is which item was affected, the **category** is the kind of error (see below), and the **detail** is a plain-language explanation.
 
 Below the banner is a **Show extracted fields** expander. Open it to see, side by side, the raw fields the model pulled from the instruction and from the readback. This is useful for understanding *why* a verdict was reached and for spotting cases where the extraction model misread the text.
@@ -63,11 +63,11 @@ Below the banner is a **Show extracted fields** expander. Open it to see, side b
 
 ## Reference: the 5 error categories
 
-- **value_substitution** — a different value was read back. *Example:* instructed FL240, read back FL250.
-- **digit_transposition** — the same digits in a different order (a higher-risk failure mode). *Example:* runway 21 read back as 12.
-- **omission** — an instructed item was not read back at all. *Example:* a frequency change was instructed but not repeated.
-- **callsign_error** — the callsign is wrong or missing. *Example:* Speedbird 245 read back as Speedbird 254.
-- **added_element** — the readback contains an item that was never instructed. *Example:* a squawk code appears in the readback but not the instruction.
+- **value_substitution**: a different value was read back. *Example:* instructed FL240, read back FL250.
+- **digit_transposition**: the same digits in a different order (a higher-risk failure mode). *Example:* runway 21 read back as 12.
+- **omission**: an instructed item was not read back at all. *Example:* a frequency change was instructed but not repeated.
+- **callsign_error**: the callsign is wrong or missing. *Example:* Speedbird 245 read back as Speedbird 254.
+- **added_element**: the readback contains an item that was never instructed. *Example:* a squawk code appears in the readback but not the instruction.
 
 A correct readback produces zero discrepancies, which is reported as **MATCH**.
 

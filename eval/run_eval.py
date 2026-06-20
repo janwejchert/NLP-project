@@ -129,11 +129,11 @@ def main() -> int:
     # Guard: an extractor failure is recorded as an "ERROR" verdict that the
     # metrics silently drop from the confusion matrix, so a run where the
     # backend is unavailable would otherwise write all-zero metrics and still
-    # exit 0 — quietly overwriting the committed real results. Fail loudly.
+    # exit 0, quietly overwriting the committed real results. Fail loudly.
     errored = [(rec, row) for rec, row in zip(records, rows_out) if rec.pred_verdict == "ERROR"]
     if errored and not args.allow_errors:
         print(
-            f"\nERROR: {len(errored)}/{len(records)} case(s) failed to extract — "
+            f"\nERROR: {len(errored)}/{len(records)} case(s) failed to extract: "
             "the extractor backend looks unavailable (e.g. Ollama not running, "
             "the model not pulled, or no HF token)."
         )

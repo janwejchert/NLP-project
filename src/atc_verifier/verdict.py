@@ -46,8 +46,8 @@ class Verdict:
 
     def summary(self) -> str:
         if self.is_match:
-            return "MATCH — readback is correct."
-        lines = [f"DISCREPANCY — {len(self.discrepancies)} issue(s) found:"]
+            return "MATCH: readback is correct."
+        lines = [f"DISCREPANCY: {len(self.discrepancies)} issue(s) found:"]
         lines += [f"  • {d.detail}" for d in self.discrepancies]
         return "\n".join(lines)
 

@@ -1,10 +1,10 @@
-# Individual Reflection — Alberto
+# Individual Reflection: Alberto
 
-**Role:** Evaluation & metrics — owner of the evaluation harness (`eval/run_eval.py`), the metric definitions (`eval/metrics.py`), and the reproducible runs in `eval/results/`.
+**Role:** Evaluation & metrics: owner of the evaluation harness (`eval/run_eval.py`), the metric definitions (`eval/metrics.py`), and the reproducible runs in `eval/results/`.
 
 ## My specific contributions
 
-I built the harness that turns our 50-case labelled set into numbers. The central design decision was framing the **positive class as "the readback contains an error"** (see the module docstring and `compute_metrics` in `eval/metrics.py`), so precision, recall and F1 measure *error detection*, not generic accuracy. On top of the standard 2×2 confusion matrix I added the metric I care about most: the **false-alarm rate** in `compute_metrics` — `fp / (fp + tn)`, the fraction of genuinely-correct readbacks we wrongly flag. I also added **per-category detection recall** so we can prove we catch every one of the five taxonomy categories (value_substitution, digit_transposition, omission, callsign_error, added_element), and the `EvalRecord` properties `category_correct` / `fields_correct` for lenient category and affected-field scoring. In `run_eval.py` I made runs reproducible (temperature 0, pinned model tag, a `--out` flag so each run archives under `eval/results/runs/`) and wrote `predictions.csv` carrying the model's raw extracted JSON for both messages, plus an auto-generated `failures.md`. I produced the baseline, hardened, final and 7b runs that quantified the iteration: a +12.5pp false-alarm regression on hardening (12.5% → 25.0%), then a **−18.8pp recovery (25.0% → 6.2%)** from the principled final fix.
+I built the harness that turns our 50-case labelled set into numbers. The central design decision was framing the **positive class as "the readback contains an error"** (see the module docstring and `compute_metrics` in `eval/metrics.py`), so precision, recall and F1 measure *error detection*, not generic accuracy. On top of the standard 2×2 confusion matrix I added the metric I care about most: the **false-alarm rate** in `compute_metrics`, `fp / (fp + tn)`, the fraction of genuinely-correct readbacks we wrongly flag. I also added **per-category detection recall** so we can prove we catch every one of the five taxonomy categories (value_substitution, digit_transposition, omission, callsign_error, added_element), and the `EvalRecord` properties `category_correct` / `fields_correct` for lenient category and affected-field scoring. In `run_eval.py` I made runs reproducible (temperature 0, pinned model tag, a `--out` flag so each run archives under `eval/results/runs/`) and wrote `predictions.csv` carrying the model's raw extracted JSON for both messages, plus an auto-generated `failures.md`. I produced the baseline, hardened, final and 7b runs that quantified the iteration: a +12.5pp false-alarm regression on hardening (12.5% → 25.0%), then a **−18.8pp recovery (25.0% → 6.2%)** from the principled final fix.
 
 ## What I learned (NLP and engineering)
 
@@ -12,11 +12,11 @@ The biggest lesson was making "the prompt feels better" *measurable*. Our "harde
 
 ## Challenges and how I handled them
 
-Diagnosing failures was hard until I logged each model's extracted fields per case. That turned TC12 from "a wrong verdict" into a visible **extraction miss**, and proved the comparator was never the cause — every residual error lived upstream in extraction. I also had to keep the harness backend-agnostic so the same code scored both ollama (3b) and hf (7b) runs.
+Diagnosing failures was hard until I logged each model's extracted fields per case. That turned TC12 from "a wrong verdict" into a visible **extraction miss**, and proved the comparator was never the cause, every residual error lived upstream in extraction. I also had to keep the harness backend-agnostic so the same code scored both ollama (3b) and hf (7b) runs.
 
 ## If I did it again
 
-I'd add confidence intervals or bootstrap resampling — 50 cases is thin, and one flipped case (TC12) moves F1 noticeably. I'd also script the run-comparison diff instead of eyeballing two `metrics.md` files.
+I'd add confidence intervals or bootstrap resampling, 50 cases is thin, and one flipped case (TC12) moves F1 noticeably. I'd also script the run-comparison diff instead of eyeballing two `metrics.md` files.
 
 ## Use of AI tools (personal note)
 

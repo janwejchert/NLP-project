@@ -4,11 +4,11 @@
 
 A Streamlit web app that checks whether a pilot's spoken-back clearance (the *readback*) faithfully matches the controller's *instruction*, and flags exactly what went wrong.
 
-> University NLP group project (Option 1 — Application Development). This is a proof of concept, not production or operational software.
+> University NLP group project (Option 1: Application Development). This is a proof of concept, not production or operational software.
 
 ## Why
 
-In air traffic control, a controller issues an instruction and the pilot reads it back so the controller can confirm it was heard correctly. Wrong or incomplete readbacks — a substituted altitude, transposed digits, an omitted item — are a documented contributor to aviation incidents (e.g. NASA's Aviation Safety Reporting System). This tool acts as an automatic second check on that loop.
+In air traffic control, a controller issues an instruction and the pilot reads it back so the controller can confirm it was heard correctly. Wrong or incomplete readbacks, a substituted altitude, transposed digits, an omitted item, are a documented contributor to aviation incidents (e.g. NASA's Aviation Safety Reporting System). This tool acts as an automatic second check on that loop.
 
 **Scope:** text input only. Live audio / speech-to-text is a possible future direction and is **not** built here.
 
@@ -21,7 +21,7 @@ You enter the controller **instruction** and the pilot **readback** as text. The
 ```text
 Instruction: Speedbird 245, descend flight level 240.
 Readback:    Descend flight level 240, Speedbird 245.
-Verdict:     MATCH — readback is correct.
+Verdict:     MATCH: readback is correct.
 ```
 
 **Wrong altitude → DISCREPANCY**
@@ -29,19 +29,19 @@ Verdict:     MATCH — readback is correct.
 ```text
 Instruction: Speedbird 245, descend flight level 240.
 Readback:    Descend flight level 250, Speedbird 245.
-Verdict:     DISCREPANCY — 1 issue(s) found:
+Verdict:     DISCREPANCY, 1 issue(s) found:
              • instructed altitude FL240, read back as FL250   [value_substitution]
 ```
 
-The verifier extracts and compares **eight fields** — `callsign`, `altitude`, `heading`, `speed`, `frequency`, `squawk`, `runway`, `qnh` — and classifies each problem into one of five error categories:
+The verifier extracts and compares **eight fields**, `callsign`, `altitude`, `heading`, `speed`, `frequency`, `squawk`, `runway`, `qnh`, and classifies each problem into one of five error categories:
 
 | Category | Meaning | Example |
 | --- | --- | --- |
 | `value_substitution` | a different value was read back | FL240 → FL250 |
 | `digit_transposition` | same digits, different order (higher-risk) | runway 21 → 12; squawk 5701 → 5071 |
-| `omission` | an instructed item was not read back | — |
+| `omission` | an instructed item was not read back | - |
 | `callsign_error` | callsign wrong or missing | Speedbird 245 → 254 |
-| `added_element` | readback contains an item not instructed | — |
+| `added_element` | readback contains an item not instructed | - |
 
 A correct readback yields zero discrepancies, which is a MATCH.
 
@@ -58,7 +58,7 @@ A **hybrid** pipeline. The LLM does only field extraction; every judgement (what
    └──────────────────┘
             │  ExtractedFields × 2
             ▼
-   ┌──────────────────┐   deterministic, field-by-field — the core IP
+   ┌──────────────────┐   deterministic, field-by-field: the core IP
    │    Comparator    │   (no LLM, no tokens; unit-tested)
    └──────────────────┘
             │  list[Discrepancy]
@@ -128,15 +128,15 @@ Relevant env vars (set in `.env`, copied from `.env.example`): `EXTRACTOR_BACKEN
 
 The test set `eval/data/atc_readback_test_set.csv` holds **50 labelled cases** (`TC01`..`TC50`) covering MATCH plus every error category. `make eval` runs the verifier over it and writes to `eval/results/`:
 
-- `metrics.md` / `metrics.json` — headline metrics
-- `predictions.csv` — per-case audit trail (predicted vs expected, extracted fields)
-- `failures.md` — misclassified cases for the failure-mode analysis
+- `metrics.md` / `metrics.json`: headline metrics
+- `predictions.csv`: per-case audit trail (predicted vs expected, extracted fields)
+- `failures.md`: misclassified cases for the failure-mode analysis
 
 Metrics reported: precision / recall / F1 for error detection (positive class = readback contains an error), false-alarm rate on correct readbacks, verdict accuracy, per-error-category detection recall, and a confusion matrix.
 
 See **[`eval/results/metrics.md`](eval/results/metrics.md)** for the numbers, and run `make eval` to regenerate them.
 
-**Latest result** — local `ollama` / `qwen2.5:3b`, 50 cases:
+**Latest result**: local `ollama` / `qwen2.5:3b`, 50 cases:
 
 | Precision | Recall | F1 | False-alarm rate | Verdict accuracy |
 | --- | --- | --- | --- | --- |
@@ -145,7 +145,7 @@ See **[`eval/results/metrics.md`](eval/results/metrics.md)** for the numbers, an
 Detection recall is **100% in every error category**. These numbers reflect an iteration
 documented in the failure analysis: a naïve prompt-hardening attempt *regressed* (false-alarm
 12.5% → 25%) by poisoning the small model's extraction with over-specific few-shot examples; a
-principled fix — a deterministic comparator rule for runway side plus safe prompt *rules* — then
+principled fix, a deterministic comparator rule for runway side plus safe prompt *rules*, then
 improved on the baseline (F1 95.7% → 98.6%, false-alarm 12.5% → 6.2%). The one remaining failure
 is an extraction miss, not a comparator error. Regenerate with `make eval`; full breakdown in
 [`eval/results/metrics.md`](eval/results/metrics.md), and see the
@@ -185,22 +185,22 @@ Makefile  requirements.txt  requirements-dev.txt  pyproject.toml  .env.example
 
 - [Install & execution guide](docs/INSTALL.md)
 - [User manual](docs/USER_MANUAL.md)
-- [Analysis notebook](notebooks/analysis.ipynb) — reproduces every number and figure
+- [Analysis notebook](notebooks/analysis.ipynb): reproduces every number and figure
 
 ### Submission deliverables (PDF)
 
 Committed under [`docs/report/pdf/`](docs/report/pdf/):
 
-- **Technical report** — `ATC_Readback_Verifier_Technical_Report.pdf` (with field review, failure analysis, and use-of-AI appendices)
-- **One-page executive summary** — `ATC_Readback_Verifier_Executive_Summary.pdf`
-- **Slides** — `ATC_Readback_Verifier_Slides.pdf`
-- **Individual reflections** — `ATC_Readback_Verifier_Individual_Reflections.pdf` (sources in [`docs/reflections/`](docs/reflections/))
+- **Technical report**: `ATC_Readback_Verifier_Technical_Report.pdf` (with field review, failure analysis, and use-of-AI appendices)
+- **One-page executive summary**: `ATC_Readback_Verifier_Executive_Summary.pdf`
+- **Slides**: `ATC_Readback_Verifier_Slides.pdf`
+- **Individual reflections**: `ATC_Readback_Verifier_Individual_Reflections.pdf` (sources in [`docs/reflections/`](docs/reflections/))
 
 ## Team
 
 | Member | Proposed role |
 | --- | --- |
-| Jan | App / UI & hosting (owns `app/`, Streamlit Cloud deploy) — repo owner |
+| Jan | App / UI & hosting (owns `app/`, Streamlit Cloud deploy) - repo owner |
 | Vlad | Comparator core IP (owns `compare.py`, `verdict.py`, `schema.py`) |
 | Felipe | Extraction & prompts (owns `src/atc_verifier/extract/`) |
 | Alberto | Evaluation & metrics (owns `eval/`) |
@@ -211,6 +211,6 @@ Roles are a starting point; the team can swap freely. Everyone writes their own 
 
 ## Live demo
 
-Hosted on Streamlit Community Cloud: **https://ejjhv6jjt6hv8qfkfmqpxa.streamlit.app/**
+Hosted on Streamlit Community Cloud: **https://nlp-project-atc.streamlit.app/**
 
 **Academic integrity / Use of AI tools:** AI assistance used on this project is documented in the report's required "Use of AI tools" section.

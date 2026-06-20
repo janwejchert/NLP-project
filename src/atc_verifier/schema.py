@@ -74,7 +74,7 @@ class Runway:
 
 
 # --------------------------------------------------------------------------- #
-# Normalization helpers — keep all "are these the same?" logic in one place so
+# Normalization helpers: keep all "are these the same?" logic in one place so
 # semantically-equal readbacks compare equal (units, trailing zeros, spelling).
 # --------------------------------------------------------------------------- #
 def normalize_callsign(value: str | None) -> str | None:

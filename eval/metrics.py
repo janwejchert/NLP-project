@@ -5,7 +5,7 @@ Framing: a readback with at least one discrepancy is the *positive* class
 
 * precision / recall / F1 measure how well we **detect** erroneous readbacks;
 * the **false-alarm rate** is the fraction of genuinely-correct readbacks we
-  wrongly flag — the metric that matters most in a safety setting, where crying
+  wrongly flag, the metric that matters most in a safety setting, where crying
   wolf erodes trust.
 
 We also report a 2x2 confusion matrix, per-error-category detection recall, and
@@ -112,7 +112,7 @@ def _pct(x: float) -> str:
 def format_metrics_markdown(metrics: dict, *, backend: str, model: str) -> str:
     c = metrics["confusion"]
     lines = [
-        "# Evaluation results — ATC Readback Verifier",
+        "# Evaluation results: ATC Readback Verifier",
         "",
         f"- **Backend:** `{backend}`  |  **Model:** `{model}`",
         f"- **Test cases:** {metrics['n']}",

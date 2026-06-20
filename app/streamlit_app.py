@@ -1,7 +1,7 @@
 """Streamlit UI for the ATC Readback Verifier.
 
-Visual language: a dark control-tower / cockpit-instrument theme — phosphor green
-for a clean read-back, caution amber and warning red for problems — so the verdict
+Visual language: a dark control-tower / cockpit-instrument theme, phosphor green
+for a clean read-back, caution amber and warning red for problems, so the verdict
 reads like an annunciator panel during the live demo.
 
 Run locally:   streamlit run app/streamlit_app.py   (uses the ollama backend)
@@ -37,7 +37,7 @@ def _load_streamlit_secrets() -> None:
         try:
             value = st.secrets[key]
         except Exception:
-            # No secrets file (local run) or key absent — fine; skip this key
+            # No secrets file (local run) or key absent, fine; skip this key
             # rather than aborting the whole bridge.
             continue
         if value:
@@ -288,7 +288,7 @@ def _display(fields, name: str) -> str:
     """Readable value for the readout. Callsign shows its original casing (the
     comparator works on a normalized lower-case form, which looks odd on screen)."""
     if fields.get(name) is None:
-        return "—"
+        return "-"
     if name == "callsign":
         raw = fields.raw.get("callsign")
         if isinstance(raw, str) and raw.strip():
@@ -342,7 +342,7 @@ def _render_result(result) -> None:
               <div class="light"></div>
               <div>
                 <div class="a-title">DISCREPANCY DETECTED</div>
-                <div class="a-sub">{n} issue(s) found — verify before transmitting.</div>
+                <div class="a-sub">{n} issue(s) found, verify before transmitting.</div>
               </div>
               <div class="a-code">CHECK</div>
             </div>
@@ -414,12 +414,12 @@ def main() -> None:
         st.markdown("---")
         st.subheader("Scenarios")
         choice = st.selectbox(
-            "Load an example", ["—"] + list(EXAMPLES.keys()), key="example_choice"
+            "Load an example", ["-"] + list(EXAMPLES.keys()), key="example_choice"
         )
         # Apply an example only when the selection actually changes. Otherwise the
         # rerun triggered by the Verify button would re-apply the example and wipe
         # any edits the user made after loading it.
-        if choice != "—" and choice != st.session_state.get("_last_example"):
+        if choice != "-" and choice != st.session_state.get("_last_example"):
             st.session_state["_last_example"] = choice
             st.session_state["instruction"], st.session_state["readback"] = EXAMPLES[choice]
 
@@ -457,10 +457,10 @@ def main() -> None:
 
         # A silent extraction failure (empty / unparseable model output on both
         # sides) yields all-None fields, which the comparator would otherwise
-        # report as a confident MATCH — the worst failure mode for a safety check.
+        # report as a confident MATCH, the worst failure mode for a safety check.
         if not result.instruction_fields.raw and not result.readback_fields.raw:
             st.error(
-                "Extraction returned no fields — the model may have failed, timed "
+                "Extraction returned no fields, the model may have failed, timed "
                 "out, or returned unparseable output. Cannot verify this read-back."
             )
             if backend == "ollama":

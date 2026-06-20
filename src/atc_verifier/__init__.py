@@ -1,4 +1,4 @@
-"""ATC Readback Verifier — public API.
+"""ATC Readback Verifier: public API.
 
 Typical use::
 

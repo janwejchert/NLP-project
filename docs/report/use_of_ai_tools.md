@@ -26,19 +26,19 @@ how we used AI assistance and where the team's own judgement governed.
 These were **not** delegated to the model; they are our own decisions and we can
 defend each one:
 
-- **Problem framing** — verifying read-back *correctness*, not transcription.
-- **Test-set design and labels** — the 50 instruction/read-back pairs and their
+- **Problem framing**: verifying read-back *correctness*, not transcription.
+- **Test-set design and labels**: the 50 instruction/read-back pairs and their
   `expected_verdict` / `error_category` / `affected_field` labels, including the
   deliberate hard cases.
-- **The error taxonomy** — the five categories (`value_substitution`,
+- **The error taxonomy**: the five categories (`value_substitution`,
   `digit_transposition`, `omission`, `callsign_error`, `added_element`) and their
   definitions.
-- **Comparison logic** — what counts as a match, the normalization rules (units,
+- **Comparison logic**: what counts as a match, the normalization rules (units,
   spelled-out numbers, telephony, trailing zeros), and the policy on which items are
   *mandatory* to read back (e.g. wind is informational and not required).
-- **Evaluation methodology** — the metric choices, including reporting false-alarm
+- **Evaluation methodology**: the metric choices, including reporting false-alarm
   rate, and the framing of error detection as the positive class.
-- **Error interpretation** — the hypotheses in the failure analysis and the
+- **Error interpretation**: the hypotheses in the failure analysis and the
   conclusions drawn from the metrics.
 
 ## Tools used

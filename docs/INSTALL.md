@@ -1,7 +1,7 @@
 # Install & Execution Guide
 
 This guide covers installing, configuring, running, evaluating, and deploying the
-**ATC Readback Verifier** — a Streamlit proof-of-concept (POC) that checks whether a
+**ATC Readback Verifier**, a Streamlit proof-of-concept (POC) that checks whether a
 pilot's readback matches a controller's instruction. It is a university NLP group
 project, not production software.
 
@@ -24,16 +24,16 @@ The default (and the backend used for the reproducible evaluation) is `ollama`.
 ## 1. Clone the repository
 
 ```bash
-git clone https://github.com/janwejchert/NLP.git
+git clone https://github.com/janwejchert/NLP-project.git
 cd NLP
 ```
 
-The full project — code, evaluation, and the report — is on the default `main`
+The full project, code, evaluation, and the report, is on the default `main`
 branch, so the clone above is all you need.
 
 ## 2. Install
 
-### Path A — `make setup` (recommended)
+### Path A: `make setup` (recommended)
 
 ```bash
 make setup
@@ -47,7 +47,7 @@ When it finishes, activate the environment:
 source .venv/bin/activate
 ```
 
-### Path B — manual (equivalent)
+### Path B: manual (equivalent)
 
 ```bash
 python3 -m venv .venv && source .venv/bin/activate
@@ -103,10 +103,10 @@ This runs the comparator over the 50 labelled cases in
 `eval/data/atc_readback_test_set.csv` using the configured backend, and writes results
 to **`eval/results/`**:
 
-- `metrics.md` / `metrics.json` — precision, recall, F1, false-alarm rate, verdict
+- `metrics.md` / `metrics.json`: precision, recall, F1, false-alarm rate, verdict
   accuracy, per-category recall, and a confusion matrix.
-- `predictions.csv` — per-case predicted vs. expected (full audit trail).
-- `failures.md` — misclassified cases for failure-mode analysis.
+- `predictions.csv`: per-case predicted vs. expected (full audit trail).
+- `failures.md`: misclassified cases for failure-mode analysis.
 
 Open `eval/results/metrics.md` for the reported figures. Re-run `make eval` to
 regenerate them.
@@ -117,7 +117,7 @@ regenerate them.
 make test            # or: pytest
 ```
 
-`tests/test_compare.py` unit-tests the deterministic comparator only — no LLM call and
+`tests/test_compare.py` unit-tests the deterministic comparator only, no LLM call and
 no token required, so these tests run anywhere (including CI).
 
 ## 8. Deploy to Streamlit Community Cloud
@@ -126,7 +126,7 @@ The hosted demo uses the `hf` backend because the cloud free tier (1 GB) cannot 
 local model. A human must perform the one-time GitHub OAuth sign-in and Deploy click.
 
 1. Go to <https://share.streamlit.io> and **sign in with GitHub**.
-2. Click **New app** and select the `janwejchert/NLP` repository and branch.
+2. Click **New app** and select the `janwejchert/NLP-project` repository and branch.
 3. Set the main file path to **`app/streamlit_app.py`**.
 4. Open **Advanced settings → Secrets** and add:
 

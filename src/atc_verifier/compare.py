@@ -1,4 +1,4 @@
-"""Deterministic field-by-field comparator — the core of the verifier.
+"""Deterministic field-by-field comparator: the core of the verifier.
 
 This module contains **no LLM calls**. It takes the structured fields extracted
 from the controller instruction and from the pilot readback and decides, for
@@ -75,7 +75,7 @@ def _described(fields: ExtractedFields, name: str) -> str:
     Scalar fields render bare ("FL240", "250"), so we prefix the field noun:
     "altitude FL240". Structured fields (heading, runway) already include the
     noun in their own ``human()`` output ("heading 270", "runway 24 left"), so we
-    do not prefix again — avoiding "heading heading 270" / "runway runway 24".
+    do not prefix again, avoiding "heading heading 270" / "runway runway 24".
     """
     text = fields.human(name)
     return text if name in text.split() else f"{name} {text}"
@@ -115,7 +115,7 @@ def _compare_runway(instruction: ExtractedFields, readback: ExtractedFields) -> 
     """A runway clearance is identified by its number; the L/R/C side is a
     refinement. We compare on the number, and flag a *side* difference only when
     BOTH messages explicitly state a side. Rationale: an unstated side is not a
-    read-back error, and small extraction models frequently hallucinate a side —
+    read-back error, and small extraction models frequently hallucinate a side,
     so comparing a stated side against an absent/invented one produces false
     alarms rather than real safety findings.
     """
@@ -157,7 +157,7 @@ def _compare_runway(instruction: ExtractedFields, readback: ExtractedFields) -> 
 def _compare_heading(instruction: ExtractedFields, readback: ExtractedFields) -> list[Discrepancy]:
     """A heading is identified by its degrees; the turn direction is a refinement.
     We compare on the value, and flag a *direction* difference only when BOTH
-    messages explicitly state a direction — mirroring :func:`_compare_runway`.
+    messages explicitly state a direction, mirroring :func:`_compare_runway`.
     Rationale: an unstated turn direction is not a read-back error, and small
     extraction models frequently omit or hallucinate one, so comparing a stated
     direction against an absent/invented one produces false alarms rather than

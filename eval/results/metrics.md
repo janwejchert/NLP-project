@@ -1,4 +1,4 @@
-# Evaluation results — ATC Readback Verifier
+# Evaluation results: ATC Readback Verifier
 
 - **Backend:** `ollama`  |  **Model:** `qwen2.5:3b`
 - **Test cases:** 50

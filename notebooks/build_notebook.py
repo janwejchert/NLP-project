@@ -29,7 +29,7 @@ def code(text: str) -> None:
 
 md(
     """
-# ATC Readback Verifier — Analysis
+# ATC Readback Verifier: Analysis
 
 This notebook **reproduces our analysis** end to end so the evidence is visible, not
 implicit in the `.py` files:
@@ -215,9 +215,9 @@ md(
     """
 ## 5. The prompt-iteration experiment
 We hypothesised that **hardening** the extraction prompt (more rules + examples) would cut the
-false-alarm rate. It did the opposite — it **regressed** (recall rose to 100% but the
+false-alarm rate. It did the opposite, it **regressed** (recall rose to 100% but the
 false-alarm rate roughly doubled). Root cause: the new few-shot examples *poisoned* the small
-model — it began reading the 4-digit callsign suffix (e.g. `Easy 4471`) as a squawk and misread
+model, it began reading the 4-digit callsign suffix (e.g. `Easy 4471`) as a squawk and misread
 `runway 24` as `heading 240`. We reverted to safe **rules** and added a deterministic
 **comparator rule** for runway side. The cell below shows which cases changed.
 """
@@ -266,7 +266,7 @@ conf = pd.DataFrame(
     index=["gold MATCH", "gold DISCREPANCY"],
     columns=["pred MATCH", "pred DISCREPANCY"],
 )
-print(f"Confusion matrix — {best['model']} (n={best['n']})")
+print(f"Confusion matrix - {best['model']} (n={best['n']})")
 display(conf)
 """
 )
@@ -280,7 +280,7 @@ cat_df = pd.DataFrame(
 ax = cat_df["detection_recall"].plot(kind="barh", figsize=(8, 3.6), color="#0c8f66")
 ax.set_xlim(0, 1.08)
 ax.set_xlabel("detection recall")
-ax.set_title(f"Per-category detection recall — {best['model']}")
+ax.set_title(f"Per-category detection recall - {best['model']}")
 for i, v in enumerate(cat_df["detection_recall"]):
     ax.text(v + 0.01, i, f"{v:.0%}", va="center", fontsize=8)
 plt.tight_layout()
@@ -331,7 +331,7 @@ md(
     """
 ## 8. Takeaways
 
-- The **deterministic comparator is reliable** — its logic is unit-tested and is not the source
+- The **deterministic comparator is reliable**, its logic is unit-tested and is not the source
   of the errors.
 - The **extraction step is the bottleneck**: the small model hallucinates fields (notably runway
   side, and callsign digits as squawk).

@@ -7,8 +7,8 @@ and a `failures.md` exactly as emitted by `eval/run_eval.py`.
 
 The `failures.md` files here are the unedited template output, so their
 `**Hypothesis:**` lines are still the auto-generated `_<fill in: ...>_`
-placeholder. The **analysed** failure write-up — with the actual hypotheses and
-root-cause reasoning — lives in:
+placeholder. The **analysed** failure write-up, with the actual hypotheses and
+root-cause reasoning, lives in:
 
 - `eval/results/failures.md` (top level, the final run), and
 - `docs/report/failure_analysis.md` (the full narrative, Appendix B of the report).

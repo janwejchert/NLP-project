@@ -29,7 +29,7 @@ def cats(a, b):
 
 
 # --------------------------------------------------------------------------- #
-# speed — every branch of the generic comparator path
+# speed: every branch of the generic comparator path
 # --------------------------------------------------------------------------- #
 def test_speed_value_substitution():
     assert cats(f(speed=250), f(speed=280)) == [VALUE_SUBSTITUTION]
@@ -65,14 +65,14 @@ def test_flight_level_vs_feet_same_number_is_substitution():
 
 
 # --------------------------------------------------------------------------- #
-# squawk leading-zero edge — documents the current zfill-vs-multiset behaviour
+# squawk leading-zero edge: documents the current zfill-vs-multiset behaviour
 # --------------------------------------------------------------------------- #
 def test_squawk_leading_zero_shuffle_is_transposition():
     assert cats(f(squawk="0700"), f(squawk="7000")) == [DIGIT_TRANSPOSITION]
 
 
 # --------------------------------------------------------------------------- #
-# runway — combined number+side mismatch and the rendered detail string
+# runway: combined number+side mismatch and the rendered detail string
 # --------------------------------------------------------------------------- #
 def test_runway_number_and_side_both_differ_single_discrepancy():
     inst = f(runway={"number": "24", "side": "left"})
@@ -93,7 +93,7 @@ def test_whitespace_only_runway_number_is_absent():
 
 
 # --------------------------------------------------------------------------- #
-# callsign — empty-after-normalize, and omission
+# callsign: empty-after-normalize, and omission
 # --------------------------------------------------------------------------- #
 def test_callsign_all_punctuation_normalizes_to_none():
     assert ExtractedFields.from_json({"callsign": "--- "}).callsign is None
@@ -119,7 +119,7 @@ def test_heading_detail_string_has_no_duplicated_noun():
 
 
 # --------------------------------------------------------------------------- #
-# heading turn-direction — same "stated in both" rule as runway side
+# heading turn-direction: same "stated in both" rule as runway side
 # --------------------------------------------------------------------------- #
 def test_heading_direction_only_in_one_message_is_not_a_discrepancy():
     # An unstated turn direction is not a read-back error (mirrors runway side).

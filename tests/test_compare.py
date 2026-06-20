@@ -1,7 +1,7 @@
 """Unit tests for the deterministic comparator (the project's core IP).
 
-These build ``ExtractedFields`` directly from JSON dicts — the same shape the
-LLM emits — so they exercise both the normalization in ``schema.py`` and the
+These build ``ExtractedFields`` directly from JSON dicts, the same shape the
+LLM emits, so they exercise both the normalization in ``schema.py`` and the
 classification logic in ``compare.py`` with no model in the loop. Cases mirror
 the categories in our gold test set (``eval/data/atc_readback_test_set.csv``).
 """
@@ -174,7 +174,7 @@ def test_runway_number_error_still_detected_with_sides():
 
 
 def test_runway_single_digit_zero_pad_matches():
-    # "cleared to land runway zero six" — the model may drop the pad on one side
+    # "cleared to land runway zero six", the model may drop the pad on one side
     # ("6") and keep it on the other ("06"); same runway, so no discrepancy.
     inst = fields(callsign="Air Europa 75", runway={"number": "06"})
     rb = fields(callsign="Air Europa 75", runway={"number": "6"})

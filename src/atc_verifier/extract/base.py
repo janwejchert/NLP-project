@@ -3,7 +3,7 @@
 An :class:`Extractor` turns one message (instruction *or* readback) into an
 :class:`~atc_verifier.schema.ExtractedFields`. Concrete backends live next to
 this file (``ollama_backend.py``, ``hf_backend.py``); they only need to call a
-model and return its raw text — all JSON cleanup and field normalization is
+model and return its raw text, all JSON cleanup and field normalization is
 shared here so the two backends behave identically.
 """
 
