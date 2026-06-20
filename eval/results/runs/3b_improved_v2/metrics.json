@@ -1,0 +1,56 @@
+{
+  "backend": "ollama",
+  "model": "qwen2.5:3b",
+  "errors": 0,
+  "n": 50,
+  "confusion": {
+    "tp": 34,
+    "fp": 4,
+    "fn": 0,
+    "tn": 12
+  },
+  "verdict_accuracy": 0.92,
+  "precision": 0.8947368421052632,
+  "recall": 1.0,
+  "f1": 0.9444444444444444,
+  "false_alarm_rate": 0.25,
+  "category_accuracy": 0.9117647058823529,
+  "field_accuracy": 0.86,
+  "per_category": {
+    "value_substitution": {
+      "n": 11,
+      "detected": 11,
+      "category_hit": 11,
+      "detection_recall": 1.0,
+      "category_accuracy": 1.0
+    },
+    "digit_transposition": {
+      "n": 7,
+      "detected": 7,
+      "category_hit": 7,
+      "detection_recall": 1.0,
+      "category_accuracy": 1.0
+    },
+    "omission": {
+      "n": 8,
+      "detected": 8,
+      "category_hit": 6,
+      "detection_recall": 1.0,
+      "category_accuracy": 0.75
+    },
+    "callsign_error": {
+      "n": 5,
+      "detected": 5,
+      "category_hit": 5,
+      "detection_recall": 1.0,
+      "category_accuracy": 1.0
+    },
+    "added_element": {
+      "n": 3,
+      "detected": 3,
+      "category_hit": 2,
+      "detection_recall": 1.0,
+      "category_accuracy": 0.6666666666666666
+    }
+  }
+}
